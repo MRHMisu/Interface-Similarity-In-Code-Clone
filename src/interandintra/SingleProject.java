@@ -1,3 +1,4 @@
+package interandintra;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class SingleProject {
 		String projectName = "ant";
 		String basePath = PropertyFileLoader.getRequiredPropertyPathByPropertyName("basePath");
 		String resultPath = PropertyFileLoader.getRequiredPropertyPathByPropertyName("resultPath");
-		String clonePairIDPath = basePath + "\\" + projectName + "\\" + "ClonePairID.txt";
-		String methodIDPath = basePath + "\\" + projectName + "\\" + "PathID.txt";
+		String clonePairIDPath = basePath + "/" + projectName + "/" + "ClonePairID.txt";
+		String methodIDPath = basePath + "/" + projectName + "/" + "PathID.txt";
 		try {
 			runTest(projectName, clonePairIDPath, methodIDPath, resultPath);
 		} catch (IOException e) {

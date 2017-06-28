@@ -8,16 +8,19 @@ public class Result {
 
 	List<ClonePairMethod> pairMethod;
 	int numberOfClones = 0;
-	float onlyReturnTypeMatched = 0;
-	float atLeastOneRootWordMatched = 0;
-	float allRootWordMatched = 0;
-	float atLeastOneSynonymMatched = 0;
-	float atLeastOneParameterMatched = 0;
-	float allParameterMatched = 0;
-	float atLeastOneSynonymForAllRootWordMatched = 0;
-	float returnTypeAndAllRootWordAndAllParameterMatched = 0;
-	float returnTypeAndAtleastOneRootWordAndAtLeastOneParameterMatched = 0;
-	float returnTypeAndAtLeastOneSynonymForAllRootWordAndAtLeastOneParameterMatched = 0;
+
+	float returnTypesAreSimilar = 0;
+	float numberAndTypesOfParametersAreSameOrSimilar = 0;
+	float atLeastOneParameterIsSimilar = 0;
+	float returnTypesAndParametersAreSimilar = 0;
+	float returnTypesAndAtLeastOneParameterAreSimilar = 0;
+	float allRootWordsAreSimilar = 0;
+	float atLeastOneRootWordIsSimilar = 0;
+	float atLeastOneSynonymIsSimilar = 0;
+	float atLeastOneSynonymForAllRootWordsIsSimilar = 0;
+	float returnTypesAndAllRootWordsAndAllParametersAreSimilar = 0;
+	float returnTypesAndAtleastOneRootWordAndAtLeastOneParameterAreSimilar = 0;
+	float returnTypesAndAtLeastOneSynonymForAllRootWordsAndAtLeastOneParameterAreSimilar = 0;
 	float isClonePairPublic = 0;
 	float isClonePairPrivate = 0;
 	float isClonePairPublicPrivateCombination = 0;
@@ -29,6 +32,8 @@ public class Result {
 
 	public void generateResult() {
 		onlyReturnTypeMatched();
+		onlyReturnTypeAndAllParametersMatched();
+		onlyReturnTypeAndAtLeastASingleParameterMatched();
 		atLeastOneRootWordMatched();
 		allRootWordMatched();
 		atLeastOneSynonymMatched();
@@ -47,28 +52,61 @@ public class Result {
 	public String toString() {
 		String result = numberOfClones
 				+ ","
-				+ onlyReturnTypeMatched
+				+ returnTypesAreSimilar
 				+ ","
-				+ atLeastOneRootWordMatched
+				+ numberAndTypesOfParametersAreSameOrSimilar
 				+ ","
-				+ allRootWordMatched
+				+ atLeastOneParameterIsSimilar
 				+ ","
-				+ atLeastOneSynonymMatched
+				+ returnTypesAndParametersAreSimilar
 				+ ","
-				+ atLeastOneParameterMatched
+				+ returnTypesAndAtLeastOneParameterAreSimilar
 				+ ","
-				+ allParameterMatched
+				+ atLeastOneRootWordIsSimilar
 				+ ","
-				+ atLeastOneSynonymForAllRootWordMatched
+				+ allRootWordsAreSimilar
 				+ ","
-				+ returnTypeAndAllRootWordAndAllParameterMatched
+				+ atLeastOneSynonymIsSimilar
 				+ ","
-				+ returnTypeAndAtleastOneRootWordAndAtLeastOneParameterMatched
+				+ atLeastOneSynonymForAllRootWordsIsSimilar
 				+ ","
-				+ returnTypeAndAtLeastOneSynonymForAllRootWordAndAtLeastOneParameterMatched
+				+ returnTypesAndAllRootWordsAndAllParametersAreSimilar
+				+ ","
+				+ returnTypesAndAtleastOneRootWordAndAtLeastOneParameterAreSimilar
+				+ ","
+				+ returnTypesAndAtLeastOneSynonymForAllRootWordsAndAtLeastOneParameterAreSimilar
 				+ "," + isClonePairPublic + "," + isClonePairPrivate + ","
 				+ isClonePairPublicPrivateCombination;
 		return result;
+	}
+
+	private void onlyReturnTypeAndAllParametersMatched() {
+
+		float count = 0;
+		float totoalCount = this.pairMethod.size();
+		for (ClonePairMethod pm : this.pairMethod) {
+			boolean rs = CloneComparing.returnTyeAndAllParametersMatched(
+					pm.getFunctionOne(), pm.getFunctionTwo());
+			if (rs)
+				count++;
+		}
+		if (totoalCount != 0)
+			returnTypesAndParametersAreSimilar = (count / totoalCount) * 100;
+	}
+
+	private void onlyReturnTypeAndAtLeastASingleParameterMatched() {
+
+		float count = 0;
+		float totoalCount = this.pairMethod.size();
+		for (ClonePairMethod pm : this.pairMethod) {
+			boolean rs = CloneComparing
+					.returnTyeAndAtLeastAsingleParametersMatched(
+							pm.getFunctionOne(), pm.getFunctionTwo());
+			if (rs)
+				count++;
+		}
+		if (totoalCount != 0)
+			returnTypesAndAtLeastOneParameterAreSimilar = (count / totoalCount) * 100;
 	}
 
 	private void onlyReturnTypeMatched() {
@@ -82,7 +120,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			onlyReturnTypeMatched = (count / totoalCount) * 100;
+			returnTypesAreSimilar = (count / totoalCount) * 100;
 	}
 
 	private void atLeastOneRootWordMatched() {
@@ -95,7 +133,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			atLeastOneRootWordMatched = (count / totoalCount) * 100;
+			atLeastOneRootWordIsSimilar = (count / totoalCount) * 100;
 	}
 
 	private void allRootWordMatched() {
@@ -108,7 +146,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			allRootWordMatched = (count / totoalCount) * 100;
+			allRootWordsAreSimilar = (count / totoalCount) * 100;
 	};
 
 	private void atLeastOneSynonymMatched() {
@@ -121,7 +159,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			atLeastOneSynonymMatched = (count / totoalCount) * 100;
+			atLeastOneSynonymIsSimilar = (count / totoalCount) * 100;
 	}
 
 	private void atLeastOneParameterMatched() {
@@ -134,7 +172,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			atLeastOneParameterMatched = (count / totoalCount) * 100;
+			atLeastOneParameterIsSimilar = (count / totoalCount) * 100;
 	}
 
 	private void allParameterMatched() {
@@ -147,7 +185,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			allParameterMatched = (count / totoalCount) * 100;
+			numberAndTypesOfParametersAreSameOrSimilar = (count / totoalCount) * 100;
 	}
 
 	private void atLeastOneSynonymForAllRootWordMatched() {
@@ -160,7 +198,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			atLeastOneSynonymForAllRootWordMatched = (count / totoalCount) * 100;
+			atLeastOneSynonymForAllRootWordsIsSimilar = (count / totoalCount) * 100;
 	}
 
 	private void returnTypeAndAllRootWordAndAllParameterMatched() {
@@ -174,7 +212,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			returnTypeAndAllRootWordAndAllParameterMatched = (count / totoalCount) * 100;
+			returnTypesAndAllRootWordsAndAllParametersAreSimilar = (count / totoalCount) * 100;
 
 	}
 
@@ -189,7 +227,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			returnTypeAndAtleastOneRootWordAndAtLeastOneParameterMatched = (count / totoalCount) * 100;
+			returnTypesAndAtleastOneRootWordAndAtLeastOneParameterAreSimilar = (count / totoalCount) * 100;
 
 	}
 
@@ -203,7 +241,7 @@ public class Result {
 				count++;
 		}
 		if (totoalCount != 0)
-			returnTypeAndAtLeastOneSynonymForAllRootWordAndAtLeastOneParameterMatched = (count / totoalCount) * 100;
+			returnTypesAndAtLeastOneSynonymForAllRootWordsAndAtLeastOneParameterAreSimilar = (count / totoalCount) * 100;
 
 	}
 

@@ -1,4 +1,7 @@
+package interandintra;
+
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,11 +19,11 @@ public class InterProjectsTest {
 
 	public static void main(String[] args) throws IOException {
 
-		String commonDirectoryPath = "/media/misu/MW/CodeCloneData/SF110/";
-		String clonePairIDPath = "/home/misu/Desktop/CloneOutputList_100_6line_80_Inter/SF100Inter/ClonePairID_Similarity_80.txt";
-		String methodIDPath = "/home/misu/Desktop/CloneOutputList_100_6line_80_Inter/SF100Inter/PathID.txt";
-		String outputInterProjectClonePairId = "/home/misu/Desktop/CloneOutputList_100_6line_80_Inter/SF100Inter/interProjectClonePairId.txt";
-		String outputResultPath = "/home/misu/Desktop/CloneOutputList_100_6line_80_Inter/SF100Inter/100InterProjectCloneResult.csv";
+		String commonDirectoryPath = "/media/misu/MS/Masters/PaperDataset/SF110/projects/";
+		String clonePairIDPath = "/media/misu/MS/Masters/PaperDataset/SF110/SF110_inter_6line_80/ClonePairID_Similarity_80.txt";
+		String methodIDPath = "/media/misu/MS/Masters/PaperDataset/SF110/SF110_inter_6line_80/PathID.txt";
+		String outputInterProjectClonePairId = "/media/misu/MS/Masters/PaperDataset/SF110/SF110_inter_6line_80/SF110projects_interProjectClonePairId.txt";
+		String outputResultPath = "/media/misu/MS/Masters/PaperDataset/SF110/CloneResult_inter_SF110.csv";
 
 		List<FunctionIdPathStarEnd> idPathStartEnd = FileUtil
 				.getFunctionIdPathStartEnd(methodIDPath);
@@ -33,6 +36,7 @@ public class InterProjectsTest {
 			idList.add(cid.getFunctionOneId() + "," + cid.getFuntionTwoId());
 		}
 		FileUtil.writeToFile(idList, outputInterProjectClonePairId);
+		System.out.println("Writting inter-project ClonePairIDs");
 
 		runTest(interProjectClonePairId, idPathStartEnd, outputResultPath);
 

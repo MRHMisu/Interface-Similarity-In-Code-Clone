@@ -2,7 +2,9 @@ package clonecodeprocess;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.ClonePairId;
 import model.ClonePairIdCode;
@@ -75,6 +77,24 @@ public class CloneCodeProcessUtil {
 		return _clonePairIdCode;
 	}
 
+	public static Map<Integer, Method> getIdMethods(List<FunctionIdPathStarEnd> idPathStartEnd)
+			throws IOException {
+		Map<Integer, Method> map = new HashMap<Integer, Method>();
+		for (FunctionIdPathStarEnd idPath : idPathStartEnd) {
+			String functionCode = FileUtil.getCodeByPathAndLineNumber(
+					idPath.getPath(), idPath.getStartLineNo(),
+					idPath.getEndLineNo());
+			Method parsedfunction = CloneCodeParse
+					.getParsedMethod(functionCode);
+
+			map.put(idPath.getFunctionId(), parsedfunction);
+
+		}
+
+		return map;
+
+	}
+
 	public static List<ClonePairIdCode> getClonePairIdCode(
 			List<PairFunctionIdPathStartEnd> listPairElement)
 			throws IOException {
@@ -88,7 +108,7 @@ public class CloneCodeProcessUtil {
 					firstFunction.getEndLineNo());
 			FunctionIdPathStarEnd secondFunction = pairElement
 					.getSecondElement();
-			
+
 			String secondFunctionCode = FileUtil.getCodeByPathAndLineNumber(
 					secondFunction.getPath(), secondFunction.getStartLineNo(),
 					secondFunction.getEndLineNo());
