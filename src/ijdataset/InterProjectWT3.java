@@ -17,29 +17,23 @@ import clonecodeprocess.CloneCodeProcessUtil;
 public class InterProjectWT3 {
 	public static void main(String[] args) throws IOException {
 
-		
-		String cloneType = "InterProject";
-		String basePath = "/media/misu/MS/Masters/PaperDataset/IJDataSet";
-		String resultPath = basePath + "/" + cloneType + "/"
-				+ "Clone_Result_IJData_InterProjectClones.txt";
-		String clonePairIDPath = basePath + "/" + cloneType + "/" + cloneType
-				+ "ClonePairID.txt";
-		String methodIDPath = basePath + "/" + cloneType + "/" + cloneType
-				+ "ClonePathID.txt";
+		String cloneType = "IntraProject";
+		String basePath = "D:\\Masters\\PaperDataset\\IJDataSet";
+		String resultPath = basePath + "/" + cloneType + "/" + "Clone_Result_IJData_InterProjectClones.txt";
+		String clonePairIDPath = basePath + "/" + cloneType + "/" + cloneType + "ClonePairID.txt";
+		String methodIDPath = basePath + "/" + cloneType + "/" + cloneType + "ClonePathID.txt";
 
 		runTest(cloneType, clonePairIDPath, methodIDPath, resultPath);
 
 	}
 
-	public static void runTest(String cloneType, String clonePairIDPath,
-			String methodIDPath, String resultPath) throws IOException {
+	public static void runTest(String cloneType, String clonePairIDPath, String methodIDPath, String resultPath)
+			throws IOException {
 
 		List<ClonePairId> idPairs = FileUtil.getConePairsId(clonePairIDPath);
-		List<FunctionIdPathStarEnd> idPathStartEnd = FileUtil
-				.getFunctionIdPathStartEnd(methodIDPath);
+		List<FunctionIdPathStarEnd> idPathStartEnd = FileUtil.getFunctionIdPathStartEnd(methodIDPath);
 
-		Map<Integer, Method> idMethods = CloneCodeProcessUtil
-				.getIdMethods(idPathStartEnd);
+		Map<Integer, Method> idMethods = CloneCodeProcessUtil.getIdMethods(idPathStartEnd);
 
 		List<ClonePairMethod> clonePairMethods = new ArrayList<ClonePairMethod>();
 
@@ -49,8 +43,7 @@ public class InterProjectWT3 {
 			Method functionTwo = idMethods.get(idPair.getFuntionTwoId());
 			if (functionOne != null && functionTwo != null) {
 
-				clonePairMethods.add(new ClonePairMethod(functionOne,
-						functionTwo));
+				clonePairMethods.add(new ClonePairMethod(functionOne, functionTwo));
 			}
 		}
 

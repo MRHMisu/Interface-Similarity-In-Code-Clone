@@ -6,13 +6,21 @@ public class FunctionIdPathStarEnd {
 	private String path;
 	private int startLineNo;
 	private int endLineNo;
+	private String project;
 
-	public FunctionIdPathStarEnd(int functionId, String path, int startLineNo,
-			int endLineNo) {
+	public FunctionIdPathStarEnd(int functionId, String path, int startLineNo, int endLineNo) {
 		this.functionId = functionId;
 		this.path = path;
 		this.startLineNo = startLineNo;
 		this.endLineNo = endLineNo;
+	}
+
+	public FunctionIdPathStarEnd(int functionId, String path, int startLineNo, int endLineNo, String project) {
+		this.functionId = functionId;
+		this.path = path;
+		this.startLineNo = startLineNo;
+		this.endLineNo = endLineNo;
+		this.project = project;
 	}
 
 	public int getFunctionId() {
@@ -21,6 +29,10 @@ public class FunctionIdPathStarEnd {
 
 	public String getPath() {
 		return path;
+	}
+
+	public String getProject() {
+		return project;
 	}
 
 	public int getStartLineNo() {
@@ -50,9 +62,8 @@ public class FunctionIdPathStarEnd {
 		if ((obj == null) || (obj.getClass() != this.getClass()))
 			return false;
 		FunctionIdPathStarEnd test = (FunctionIdPathStarEnd) obj;
-		if ((this.path.equals(test.path)
-				&& (this.startLineNo == test.startLineNo)
-				&& (this.endLineNo == test.endLineNo) && (this.functionId == test.functionId)))
+		if ((this.path.equals(test.path) && (this.startLineNo == test.startLineNo) && (this.endLineNo == test.endLineNo)
+				&& (this.functionId == test.functionId)))
 			return true;
 		return false;
 	}
