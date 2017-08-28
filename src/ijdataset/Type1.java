@@ -12,15 +12,16 @@ import model.FunctionIdPathStarEnd;
 import model.Result;
 import support.FileUtil;
 import clonecodeprocess.CloneCodeProcessUtil;
+import clonecodeprocess.CloneComparing;
 
 public class Type1 {
 
 	public static void main(String[] args) throws IOException {
 
-		String cloneType = "IntraProject";
+		String cloneType = "Type2";
 		String basePath = "/media/misu/MS/Masters/PaperDataset/IJDataSet";
 		String resultPath = basePath + "/" + cloneType + "/"
-				+ "Clone_Result_IJData_IntraProject.txt";
+				+ "Type2OneRootWordNotMatch_UnderScoreRemoval.txt";
 		String clonePairIDPath = basePath + "/" + cloneType + "/" + cloneType
 				+ "ClonePairID.txt";
 		String methodIDPath = basePath + "/" + cloneType + "/" + cloneType
@@ -41,11 +42,30 @@ public class Type1 {
 				.getClonePairIdCode(idPairs, idPathStartEnd);
 		List<ClonePairMethod> clonePairMethods = CloneCodeProcessUtil
 				.getClonePairMethod(clonePairIdCode);
-		Result result = new Result(clonePairMethods);
-		result.generateResult();
-		String output = cloneType + "," + result.toString();
-		System.out.println(output);
-		FileUtil.writeToFile(output, resultPath);
+
+		String output = null;
+		for (ClonePairMethod x : clonePairMethods) {
+
+			if (!CloneComparing.atLeastOneRootWordMatched(x.getFunctionOne(),
+					x.getFunctionTwo())) {
+				String returnType = x.getFunctionOne().getReturnType() + ","
+						+ x.getFunctionTwo().getReturnType();
+				String name = x.getFunctionOne().getMethodName() + ","
+						+ x.getFunctionTwo().getMethodName();
+				String parameter = x.getFunctionOne().getParameterTypes()
+						.toString()
+						+ ","
+						+ x.getFunctionTwo().getParameterTypes().toString();
+				output = returnType + "--" + name + "--" + parameter;
+				FileUtil.writeToFile(output, resultPath);
+			}
+		}
+
+		// Result result = new Result(clonePairMethods);
+		// result.generateResult();
+		// String output = cloneType + "," + result.toString();
+		// System.out.println(output);
+		// FileUtil.writeToFile(output, resultPath);
 
 	}
 

@@ -21,10 +21,21 @@ public class WordService {
 	}
 
 	public static Set<String> getRootWords(String methodName) {
-		Set<String> wordsAfterParsingFromPascleCase = PascleNameExtractor.getWorldListFromPascleCase(methodName);
-		Set<String> wordsAfterRemovingStopWords = StopwordRemover.removeStopWord(wordsAfterParsingFromPascleCase);
-		Set<String> wordsAfterStemming = WordStemmer.getStemmedWord(wordsAfterRemovingStopWords);
-		return wordsAfterStemming;
+		Set<String> rootWords = new HashSet<String>();
+		methodName = methodName.replaceAll("\\d", "");
+		String[] methodNames = methodName.split("_");
+
+		for (String method : methodNames) {
+			Set<String> wordsAfterParsingFromPascleCase = PascleNameExtractor
+					.getWorldListFromPascleCase(method);
+			Set<String> wordsAfterRemovingStopWords = StopwordRemover
+					.removeStopWord(wordsAfterParsingFromPascleCase);
+			Set<String> wordsAfterStemming = WordStemmer
+					.getStemmedWord(wordsAfterRemovingStopWords);
+			rootWords.addAll(wordsAfterStemming);
+		}
+
+		return rootWords;
 	}
 
 }
